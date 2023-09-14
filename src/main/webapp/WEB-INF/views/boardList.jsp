@@ -11,23 +11,25 @@
     </div>
     <form action="/board/list" method="get" class="mb-3 row">
         <div class="input-group">
-        <div class="col-2">
+        <div class="col-2 mt-3">
         <select name="key" class="form-select">
             <option value="boardTitle">제목</option>
             <option value="boardWriter">작성자</option>
         </select>
         </div>
-        <div class="col-2">
+        <div class="col-2 mt-3">
         <input type="text" class="form-control" name="query" placeholder="검색어를 입력하세요">
         </div>
-        <div class="col-2">
+        <div class="col-2 mt-3">
         <input type="submit" value="검색" class="btn btn-primary">
         </div>
         </div>
     </form>
     </div>
 </div>
+
 <div class="container" id="list">
+    <c:if test="${paging.maxPage>=1}">
     <table class="table table-striped table-hover text-center">
         <tr>
             <th>글번호</th>
@@ -37,20 +39,29 @@
             <th>조회수</th>
         </tr>
         <c:forEach items="${boardList}" var="board">
-            <tr>
+            <tr style="cursor: pointer" onclick="location.href='/board?id=${board.id}&page=${paging.page}&query=${query}&key=${key}'">
                 <td>${board.id}</td>
-                <td><a href="/board?id=${board.id}&page=${paging.page}&query=${query}&key=${key}">${board.boardTitle}</a></td>
+                <td>${board.boardTitle}</td>
                 <td>${board.boardWriter}</td>
                 <td>${board.createdAt}</td>
                 <td>${board.boardHits}</td>
             </tr>
         </c:forEach>
     </table>
+    </c:if>
+    <c:if test="${paging.maxPage==0}">
+        <h1 class="text-center mt-5">작성된 글이 없습니다.</h1>
+    </c:if>
+    <div class="text-end">
+        <a href="/board/save"><button class="btn btn-primary">글쓰기</button></a>
+    </div>
 </div>
+
 
 <%-- 페이지 번호 출력 부분 --%>
 <div class="container">
     <ul class="pagination justify-content-center">
+        <c:if test="${paging.maxPage>=1}">
         <c:choose>
             <%-- 현재 페이지가 1페이지면 이전 글자만 보여줌 --%>
             <c:when test="${paging.page<=paging.startPage}">
@@ -124,6 +135,7 @@
                 </li>
             </c:otherwise>
         </c:choose>
+        </c:if>
     </ul>
 </div>
 </body>

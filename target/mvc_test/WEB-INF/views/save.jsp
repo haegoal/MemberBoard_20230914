@@ -8,60 +8,76 @@
     <div class="row">
     <jsp:include page="header.jsp"></jsp:include>
     </div>
-    <form class="card p-3" action="/member/save" method="post" enctype="multipart/form-data" name="frm">
+    <form class="card me-4" action="/member/save" method="post" enctype="multipart/form-data" name="frm">
+        <div class="row m-3">
+            <div class="col">
         <div class="row">
         <div class="col-md-6">
-            <label for="member-email" class="form-label ">이메일</label>
+            <div class="input-group">
+            <span class="input-group-text">이메일</span>
             <input class="form-control" type="text" class="form-control" name="memberEmail" id="member-email" onblur="checkId_fn()" autocomplete='off' minlength="10" maxlength='25'>
             <p id="id-check"></p>
+            </div>
         </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
         <div class="col-md-6">
-            <label for="member-password" class="form-label">비밀번호</label>
+            <div class="input-group">
+            <span class="input-group-text">비밀번호</span>
             <input class="form-control" type="password" class="form-control" name="memberPassword" id="member-password" onblur="check_fn()" autocomplete='off' maxlength='25'>
             <p id="p-check"></p>
         </div>
         </div>
-        <div class="row">
+        </div>
+        <div class="row mt-3">
             <div class="col-md-6">
-                <label for="member-name" class="form-label">이름</label>
-                <input class="form-control" type="text" class="form-control" name="memberName" id="member-name" autocomplete='off' maxlength='15' oninput='isKor(this)'/>
+                <div class="input-group">
+                    <span class="input-group-text">이름</span>
+                    <input class="form-control" type="text" class="form-control" name="memberName" id="member-name" autocomplete='off' maxlength='15' oninput='isKor(this)'/>
+            </div>
             </div>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-6">
-                <label for="member-birth" class="form-label">생일</label>
-                <input class="form-control" type="date" class="form-control" name="memberBirth" id="member-birth" autocomplete='off'>
+                <div class="input-group">
+                    <span class="input-group-text">생일</span>
+                     <input class="form-control" type="date" class="form-control" name="memberBirth" id="member-birth" autocomplete='off'>
+            </div>
             </div>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-6">
-                <label for="member-mobile" class="form-label">전화번호</label>
+                <div class="input-group">
+                    <span class="input-group-text">전화번호</span>
                 <input class="form-control" type="text" class="form-control" name="memberMobile" id="member-mobile" autocomplete='off' minlength="11" maxlength="11"  oninput='isNumber(this);'>
             </div>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="row">
+        </div>
+        <div class="row mt-3">
             <div class="col-md-6">
-                <label for="member-profile" class="form-label">프로필사진</label>
+                    <label for="member-profile" class="form-label">프로필사진</label>
                 <input class="form-control" type="file" class="form-control" name="memberProfile" id="member-profile" autocomplete='off' multiple>
             </div>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="row">
-            <div class="col-md-6">
+        </div>
+            <div class="col">
+                <img src = "http://via.placeholder.com/120x150" width="40%" id="image">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col-md-6 text-end">
                 <button class="btn btn-primary">가입</button>
             </div>
         </div>
     </form>
-    </div>
 </div>
 
 </body>
 <script>
+
+    $(frm.memberProfile).on("change", function(e){
+        $("#image").attr("src", URL.createObjectURL(e.target.files[0]));
+    })
 
     let idc = 0;
 

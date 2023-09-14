@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="MemberBoard_20230914" />
+        <module name="member_20230905" />
       </profile>
     </annotationProcessing>
   </component>
