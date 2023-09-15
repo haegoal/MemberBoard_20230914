@@ -22,6 +22,7 @@
             <div class="col">
 <c:choose>
 <c:when test="${user!=null}">
+    <input class="mt-3" type="hidden" name="boardId" value="${userId}" readonly><br>
     <input class="mt-3" type="text" name="boardWriter" value="${user}" readonly><br>
 </c:when>
 <c:otherwise>

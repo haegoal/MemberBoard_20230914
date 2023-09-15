@@ -16,24 +16,24 @@
             <div class="input-group">
             <span class="input-group-text">이메일</span>
             <input class="form-control" type="text" class="form-control" name="memberEmail" id="member-email" onblur="checkId_fn()" autocomplete='off' minlength="10" maxlength='25'>
-            <p id="id-check"></p>
             </div>
         </div>
         </div>
+                <p id="id-check"></p>
         <div class="row mt-3">
         <div class="col-md-6">
             <div class="input-group">
             <span class="input-group-text">비밀번호</span>
             <input class="form-control" type="password" class="form-control" name="memberPassword" id="member-password" onblur="check_fn()" autocomplete='off' maxlength='25'>
-            <p id="p-check"></p>
         </div>
         </div>
         </div>
+                <p id="p-check"></p>
         <div class="row mt-3">
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-text">이름</span>
-                    <input class="form-control" type="text" class="form-control" name="memberName" id="member-name" autocomplete='off' maxlength='15' oninput='isKor(this)'/>
+                    <input class="form-control" type="text" class="form-control" name="memberName" id="member-name" autocomplete='off' maxlength='12' oninput='isKor(this)'/>
             </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
         </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6">
+            <div class="col">
                     <label for="member-profile" class="form-label">프로필사진</label>
                 <input class="form-control" type="file" class="form-control" name="memberProfile" id="member-profile" autocomplete='off' multiple>
             </div>

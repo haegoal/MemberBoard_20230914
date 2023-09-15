@@ -7,7 +7,7 @@
 <mapper namespace="Board">
     <select id="paging" parameterType="java.util.HashMap" resultType="board">
         select id, boardWriter, boardTitle,
-               date_format(createdAt, "%y-%m-%d %H:%i:%s") createdAt, boardHits
+               date_format(createdAt, "%y-%m-%d %H:%i:%s") createdAt, boardHits, boardId
         from board_table order by id desc limit #{start}, #{limit}
     </select>
 
@@ -21,12 +21,12 @@
 
     <select id="search" resultType="board" parameterType="java.util.HashMap">
         SELECT id, boardWriter, boardTitle,
-               date_format(createdAt, "%y-%m-%d %H:%i:%s") createdAt, boardHits
+               date_format(createdAt, "%y-%m-%d %H:%i:%s") createdAt, boardHits, boardId
         FROM board_table WHERE ${k} LIKE CONCAT('%', #{q}, '%') limit #{start}, #{limit}
     </select>
 
     <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
-        insert into board_table(boardWriter, boardpass, boardtitle, boardcontents, fileAttached) values (#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents}, #{fileAttached})
+        insert into board_table(boardWriter, boardpass, boardtitle, boardcontents, fileAttached, boardId) values (#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents}, #{fileAttached}, #{boardId})
     </insert>
 
     <insert id="saveFile" parameterType="boardFile">
@@ -39,12 +39,22 @@
     </update>
     <select id="findById" parameterType="Long" resultType="board">
         select id, boardWriter, boardTitle, boardContents, fileAttached, boardPass,
-               date_format(createdAt, "%y-%m-%d %H:%i:%s") as createdAt, boardHits
+               date_format(createdAt, "%y-%m-%d %H:%i:%s") as createdAt, boardHits, boardId
         from board_table where id = #{id}
     </select>
     <select id="findFile" parameterType="Long" resultType="boardFile">
         select * from board_file_table where boardId = #{boardId}
     </select>
+
+    <delete id="delete" parameterType="Long">
+        delete from board_table where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="board">
+        update board_table set boardTitle = #{boardTitle}, boardContents = #{boardContents}, boardHits = #{boardHits} where id = #{id}
+    </update>
+
+
 </mapper>
 
 

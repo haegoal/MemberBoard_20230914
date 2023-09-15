@@ -15,7 +15,7 @@
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/db_springframework?useSSL=false&amp;serverTimezone=Asia/Seoul" />
         <property name="username" value="user_springframework"/>
-        <property name="password" value="pass"/>
+        <property name="password" value="1234"/>
     </bean>
 
     <!-- 현재 프로젝트 패키지 경로 맞는지 확인 -->

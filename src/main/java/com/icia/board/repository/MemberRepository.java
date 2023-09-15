@@ -28,4 +28,12 @@ public class MemberRepository {
     public MemberDTO findEmail(String memberEmail) {
         return sql.selectOne("Member.findEmail", memberEmail);
     }
+
+    public Long findId(MemberDTO memberDTO) {
+        return sql.selectOne("Member.findId", memberDTO);
+    }
+
+    public MemberDTO findMember(Long id) {
+        return sql.selectOne("Member.findMember", id);
+    }
 }

@@ -6,6 +6,7 @@ import com.icia.board.dto.CommentDTO;
 import com.icia.board.dto.PageDTO;
 import com.icia.board.service.BoardService;
 import com.icia.board.service.CommentService;
+import com.icia.board.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,13 @@ public class BoardController {
     public String save(){
         return "boardSave";
     }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") Long id){
+        boardService.delete(id);
+        return "redirect:/board/list";
+    }
+
 
     @GetMapping
     public String findById(@RequestParam("id") Long id,
@@ -79,6 +87,7 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
+        System.out.println("boardDTO = " + boardDTO);
         boardService.save(boardDTO);
         return "redirect:/board/list";
     }

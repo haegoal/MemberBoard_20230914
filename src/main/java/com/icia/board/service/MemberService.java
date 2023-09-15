@@ -49,4 +49,12 @@ public class MemberService {
     public MemberDTO findEmail(String memberEmail) {
         return memberRepository.findEmail(memberEmail);
     }
+
+    public Long findId(MemberDTO memberDTO) {
+        return memberRepository.findId(memberDTO);
+    }
+
+    public MemberDTO findMember(Long id) {
+        return memberRepository.findMember(id);
+    }
 }

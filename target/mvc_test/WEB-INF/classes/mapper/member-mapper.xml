@@ -5,8 +5,12 @@
 <!-- namespace 반드시 작성!
  -->
 <mapper namespace="Member">
-    <select id="login" parameterType="member" resultType="member">
+    <select id="login" parameterType="member" resultType="member" >
         select * from member_table where memberEmail = #{memberEmail} and memberPassword = #{memberPassword}
+    </select>
+
+    <select id="findId" parameterType="member" resultType="Long" >
+        select id from member_table where memberEmail = #{memberEmail} and memberPassword = #{memberPassword}
     </select>
 
     <insert id="save" parameterType="member" useGeneratedKeys="true" keyProperty="id">
@@ -20,6 +24,10 @@
 
     <select id="findEmail" parameterType="String" resultType="member">
         select * from member_table where memberEmail = #{memberEmail}
+    </select>
+
+    <select id="findMember" parameterType="Long" resultType="member">
+        select * from member_table where id = #{id}
     </select>
 
 </mapper>
