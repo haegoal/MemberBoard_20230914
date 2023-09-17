@@ -1,16 +1,18 @@
 package com.icia.board.controller;
 
-import com.icia.board.dto.BoardDTO;
-import com.icia.board.dto.BoardFileDTO;
-import com.icia.board.dto.CommentDTO;
-import com.icia.board.dto.PageDTO;
+import com.icia.board.dto.*;
 import com.icia.board.service.BoardService;
 import com.icia.board.service.CommentService;
 import com.icia.board.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,6 +20,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+    @Autowired
+    private MemberService memberService;
+
     @Autowired
     private BoardService boardService;
     @Autowired
@@ -34,6 +39,29 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/update")
+    public String update(@RequestParam("id") Long id,Model model){
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        if (boardDTO.getFileAttached() == 1) {
+            List<BoardFileDTO> boardFileDTOList = boardService.findFile(id);
+            model.addAttribute("boardFileList", boardFileDTOList);
+            System.out.println(boardFileDTOList);
+        }
+        return "boardUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDTO boardDTO) throws IOException {
+        boardService.update(boardDTO);
+        return "redirect:/board/list";
+    }
+
+    @PostMapping("/save")
+    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
+        boardService.save(boardDTO);
+        return "redirect:/board/list";
+    }
 
     @GetMapping
     public String findById(@RequestParam("id") Long id,
@@ -43,10 +71,16 @@ public class BoardController {
                            Model model) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+        MemberDTO memberDTO = memberService.findEmail(boardDTO.getBoardWriter());
+        List<MemberDTO> memberDTOList = memberService.findAll();
         model.addAttribute("board", boardDTO);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("members", memberDTOList);
+        System.out.println(memberDTOList);
         if (boardDTO.getFileAttached() == 1) {
             List<BoardFileDTO> boardFileDTOList = boardService.findFile(id);
             model.addAttribute("boardFileList", boardFileDTOList);
+            System.out.println(boardFileDTOList);
         }
 
         List<CommentDTO> commentDTOList = commentService.findAll(id);
@@ -85,12 +119,7 @@ public class BoardController {
         return "boardList";
     }
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
-        System.out.println("boardDTO = " + boardDTO);
-        boardService.save(boardDTO);
-        return "redirect:/board/list";
-    }
+
 }
 
 

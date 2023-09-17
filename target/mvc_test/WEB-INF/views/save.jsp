@@ -56,7 +56,7 @@
         <div class="row mt-3">
             <div class="col">
                     <label for="member-profile" class="form-label">프로필사진</label>
-                <input class="form-control" type="file" class="form-control" name="memberProfile" id="member-profile" autocomplete='off' multiple>
+                <input class="form-control" type="file" class="form-control" name="memberProfile" id="member-profile" autocomplete='off' multiple accept="image/*">
             </div>
         </div>
         </div>

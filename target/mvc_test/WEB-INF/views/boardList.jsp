@@ -53,7 +53,7 @@
         <h1 class="text-center mt-5">작성된 글이 없습니다.</h1>
     </c:if>
     <div class="text-end">
-        <a href="/board/save"><button class="btn btn-primary">글쓰기</button></a>
+        <a href="/board/save?page=${paging.page}&query=${query}&key=${key}'"><button class="btn btn-primary">글쓰기</button></a>
     </div>
 </div>
 

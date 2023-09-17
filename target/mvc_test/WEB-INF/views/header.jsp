@@ -32,7 +32,7 @@
               </li>
         <c:if test="${user!=null}">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/member/read">마이페이지</a>
+              <a class="nav-link active" aria-current="page" href="/member/read?id=${userId}"> 마이페이지</a>
             </li>
         </c:if>
             <c:if test="${sessionScope.user == 'admin@admin.com'}">

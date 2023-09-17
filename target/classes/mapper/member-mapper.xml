@@ -30,6 +30,17 @@
         select * from member_table where id = #{id}
     </select>
 
+    <select id="findAll" resultType="member">
+        select * from member_table
+    </select>
+
+    <select id="findFile" parameterType="Long" resultType="memberFile">
+        select * from member_file_table where memberId = #{memberId}
+    </select>
+
+    <update id="update" parameterType="member" >
+        update member_table set memberName = #{memberName}, memberBirth = #{memberBirth}, memberMobile = #{memberMobile} where id = #{id}
+    </update>
 </mapper>
 
 

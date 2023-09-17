@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class MemberRepository {
     @Autowired
@@ -35,5 +37,18 @@ public class MemberRepository {
 
     public MemberDTO findMember(Long id) {
         return sql.selectOne("Member.findMember", id);
+    }
+
+    public List<MemberDTO> findAll() {
+        return sql.selectList("Member.findAll");
+    }
+
+    public List<MemberFileDTO> findFile(Long memberId) {
+        return sql.selectList("Member.findFile", memberId);
+    }
+
+    public MemberDTO update(MemberDTO memberDTO) {
+        sql.update("Member.update", memberDTO);
+        return memberDTO;
     }
 }

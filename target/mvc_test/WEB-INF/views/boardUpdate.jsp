@@ -37,6 +37,9 @@
           <div contentEditable="true" class="form-control">
             <c:if test="${board.fileAttached == 1}">
               <c:forEach items="${boardFileList}" var="boardFile"  varStatus="status">
+                <c:if test="${status.index==0}">
+                  ${status.index=5}
+                </c:if>
                 <c:if test="${status.index == 0}">
                 <img src="${pageContext.request.contextPath}/upload/${boardFile.storedFileName}" id="image">
                 </c:if>

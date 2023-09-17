@@ -3,13 +3,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Comment">
+
     <insert id="save" parameterType="comment">
-        insert into comment_table(commentWriter, commentContents, boardId)
-        values (#{commentWriter}, #{commentContents}, #{boardId})
+        insert into comment_table(commentWriter, commentContents, boardId, commentPassword, memberId)
+        values (#{commentWriter}, #{commentContents}, #{boardId}, #{commentPassword}, #{memberId})
     </insert>
     <select id="findAll" parameterType="Long" resultType="comment">
         select id, commentWriter, commentContents,
-               date_format(commentCreatedDate, "%y-%m-%d %H:%i:%s") as commentCreatedDate, boardId
+               date_format(commentCreatedDate, "%y-%m-%d %H:%i:%s") as commentCreatedDate, boardId, memberId
         from comment_table where boardId = #{boardId} order by id desc
     </select>
+
+    <select id="find" parameterType="comment" resultType="comment">
+        select * from comment_table where id = #{id} and commentPassword = #{commentPassword}
+    </select>
+
+    
+    <delete id="delete" parameterType="Long">
+        delete from comment_table where id = #{id}
+    </delete>
 </mapper>

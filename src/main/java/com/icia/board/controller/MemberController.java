@@ -1,6 +1,9 @@
 package com.icia.board.controller;
 
+import com.icia.board.dto.BoardDTO;
+import com.icia.board.dto.BoardFileDTO;
 import com.icia.board.dto.MemberDTO;
+import com.icia.board.dto.MemberFileDTO;
 import com.icia.board.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Member;
+import java.util.List;
 
 @Controller
 @RequestMapping("/member")
@@ -51,14 +55,26 @@ public class MemberController {
     }
 
 
-    @GetMapping("/findemail")
-    public ResponseEntity findEmail(@RequestParam("email") String memberEmail){
-        MemberDTO memberDTO = memberService.findEmail(memberEmail);
-        if(memberDTO!=null){
-            return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/findAll")
+    public ResponseEntity findEmail(){
+        List<MemberDTO> memberDTOList = memberService.findAll();
+        if(memberDTOList!=null){
+            return new ResponseEntity<>(memberDTOList, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }
+    }
+
+
+    @GetMapping("/read")
+    public String read(@RequestParam("id") Long memberId,Model model) {
+        MemberDTO memberDTO = memberService.findMember(memberId);
+        model.addAttribute("u", memberDTO);
+        if (memberDTO.getFileAttached() == 1) {
+            List<MemberFileDTO> memberFileDTOList = memberService.findFile(memberId);
+            model.addAttribute("memberFileList", memberFileDTOList);
+        }
+        return "read";
     }
 
     @PostMapping("/save")
@@ -75,6 +91,13 @@ public class MemberController {
         cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        return "redirect:/";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute MemberDTO memberDTO) throws IOException {
+        System.out.println("memberDTO = " + memberDTO);
+        memberService.update(memberDTO);
         return "redirect:/";
     }
 

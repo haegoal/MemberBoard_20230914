@@ -35,12 +35,15 @@
                 <span class="mb-5"> 음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다.    </span><span onclick="policy_fn()" style="font-weight:900; cursor: pointer ">[저작권법 안내]</span>
                 <br><br><br>
                 <div class="col-md-12">
-                <textarea class="form-control" rows="8" cols="100" name="boardContents"></textarea><br>
+                    <div contentEditable="true" class="form-control">
+                        <img src="" id="image"><img src="" id="image1"><img src="" id="image2"><img src="" id="image3"><img src="" id="image4">
+                <textarea class="form-control" rows="8" cols="100" name="boardContents">
+                </textarea>
+                    </div>
                 </div>
-                <input class="mt-2" type="file" name="boardFile" multiple><br>
+                <input class="mt-2" type="file" id="file" name="boardFile" multiple accept="image/*" ><br>
                 <div class="text-end">
-                <input class="mt-3" type="submit" value="등록" class="btn btn-primary">
-                <input class="mt-3"  type="reset" value="취소" class="btn btn-secondary">
+                <input type="submit" value="등록" class="btn btn-primary mt-3">
                 </div>
             </div>
         </div>
@@ -62,6 +65,63 @@
 </div>
 </body>
 <script>
+
+    $(frm).on("submit", function(e){
+        e.preventDefault();
+        const boardWriter = $(frm.boardWriter).val();
+        const boardPass = $(frm.boardPass).val();
+        const boardTitle = $(frm.boardTitle).val();
+        const boardFile = document.getElementById('file');
+        if(boardWriter==""){
+            alert("작성자 입력바람!")
+        }else if(boardPass ==""){
+            alert("비번입력바람!")
+        }else if(boardTitle == ""){
+            alert("제목입력바람")
+        }else if(boardFile.length > 5){
+            alert("파일은 5개까지만 가능합니다.")
+        }else{
+            frm.submit();
+        }
+    })
+
+
+    $(frm.boardFile).on("change", function (e){
+        e.target.files.length=0;
+        if(e.target.files.length>5) {
+            alert("파일은 5개만 업로드됩니다.")
+        }else if(e.target.files.length==1) {
+            $("#image").attr("src", URL.createObjectURL(e.target.files[0]));
+            $("#image1").attr("src", "");
+            $("#image2").attr("src", "");
+            $("#image3").attr("src", "");
+            $("#image4").attr("src", "");
+        }else if(e.target.files.length==2) {
+            $("#image").attr("src", URL.createObjectURL(e.target.files[0]));
+            $("#image1").attr("src", URL.createObjectURL(e.target.files[1]));
+            $("#image2").attr("src", "");
+            $("#image3").attr("src", "");
+            $("#image4").attr("src", "");
+        }else if(e.target.files.length==3) {
+            $("#image").attr("src", URL.createObjectURL(e.target.files[0]));
+            $("#image1").attr("src", URL.createObjectURL(e.target.files[1]));
+            $("#image2").attr("src", URL.createObjectURL(e.target.files[2]));
+            $("#image3").attr("src", "");
+            $("#image4").attr("src", "");
+        }else if(e.target.files.length==4) {
+            $("#image").attr("src", URL.createObjectURL(e.target.files[0]));
+            $("#image1").attr("src", URL.createObjectURL(e.target.files[1]));
+            $("#image2").attr("src", URL.createObjectURL(e.target.files[2]));
+            $("#image3").attr("src", URL.createObjectURL(e.target.files[3]));
+            $("#image4").attr("src", "");
+        }else if(e.target.files.length==5) {
+            $("#image").attr("src", URL.createObjectURL(e.target.files[0]));
+            $("#image1").attr("src", URL.createObjectURL(e.target.files[1]));
+            $("#image2").attr("src", URL.createObjectURL(e.target.files[2]));
+            $("#image3").attr("src", URL.createObjectURL(e.target.files[3]));
+            $("#image4").attr("src", URL.createObjectURL(e.target.files[4]));
+        }
+    })
     const policy_fn = () => {
       $("#policy_modal").modal("show");
     }

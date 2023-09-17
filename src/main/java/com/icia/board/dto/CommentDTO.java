@@ -9,4 +9,6 @@ public class CommentDTO{
     private String commentContents;
     private String commentCreatedDate;
     private Long boardId;
+    private String commentPassword;
+    private Long memberId;
 }
